@@ -5,17 +5,22 @@ T11 = T(:,:,1);
 T12 = T(:,:,2);
 T22 = T(:,:,3);
 
-lambda1 = (T11+T22)/2 + sqrt( (T11+T22).^2/4 + T12.^2 );
-lambda2 = (T11+T22)/2 - sqrt( (T11+T22).^2/4 + T12.^2 );
+lambda1 = real( (T11+T22)/2 + sqrt( (T11+T22).^2/4 - ( - T12.^2 + T11.*T22 ) ) );
+lambda2 = real( (T11+T22)/2 - sqrt( (T11+T22).^2/4 - ( - T12.^2 + T11.*T22 ) ) );
 
 % E1:
 E1e1 = ones(size(T11));
 E1e2 = (lambda1 - T11)./T12;
+scale1 = E1e1.^2 + E1e2.^2;
+E1e1 = E1e1./sqrt(scale1);
+E1e2 = E1e2./sqrt(scale1);
 
 % E2:
 E2e1 = ones(size(T11));
 E2e2 = (lambda2 - T11)./T12;
-
+scale2 = E2e1.^2 + E2e2.^2;
+E2e1 = E2e1./sqrt(scale2);
+E2e2 = E2e2./sqrt(scale2);
 % alpha
 alpha1 = exp(-lambda1/c);
 alpha2 = exp(-lambda2/c);
