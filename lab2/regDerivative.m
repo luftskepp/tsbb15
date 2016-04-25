@@ -1,8 +1,8 @@
 function [fx, fy] = regDerivative(im, lpSize, standardDev)
 % calculates the regularized derivatives fx, fy of an image im;
 
-% make Gaussian of size lpSize with std standardDev;
-x = -floor(lpSize/2):floor(lpSize/2);
+% make Gaussian of size 2*lpSize+1 with std standardDev;
+x = -lpSize:lpSize;
 lp = exp(-0.5.*x.^2/standardDev^2);
 lp = lp/sum(lp(:)); % normalize
 % calc regularized 1D sobel

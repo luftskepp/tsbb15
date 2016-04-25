@@ -19,29 +19,36 @@ HL = estHessian(img,7,3);
 duds = diffusionTrace(D,HL);
 
 %% test:
+
 testCircle
-[fx, fy] = regDerivative(im,7,3);
-T = estimateTensor(fx,fy,7,3);
+% constants:
+c = 10;
 
-% diffusion tensor:
-c = 1;
-D = TtoD(T,c);
-
-% hessian:
-HL = estHessian(im,7,3);
-
-% diffusion:
-duds = diffusionTrace(D,HL);
-
-
+figure(1); clf;
+subplot(221); imagesc(im); colormap bone; axis image; axis off; title input;
 % restore:
 imtmp = im;
 delta = 1;
 for i = 1:10
+    % estimate tensor
+    [fx, fy] = regDerivative(im,1,1);
+    T = estimateTensor(fx,fy,1,1);
+    
+    % diffusion tensor:
+    D = TtoD(T,c);
+
+    % hessian:
+    HL = estHessian(im,7,3);
+    
+    % diffusion:
+    duds = diffusionTrace(D,HL);
+
     imtmp = imtmp + delta*duds;
-    imagesc(imtmp);
+    subplot(222); 
+    imagesc(imtmp); colormap bone; axis image; axis off; title output;
+    subplot(223); imagesc(T); axis image; axis off; title T;
+    subplot(224); imagesc(duds); axis image; axis off; title D;
     shg; pause(0.5);
 end
-imagesc(im)
 
     %% 

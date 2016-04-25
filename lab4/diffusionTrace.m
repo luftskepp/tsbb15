@@ -2,6 +2,7 @@ function duds = diffusionTrace(D, HL)
 D11 = D(:,:,1);
 D12 = D(:,:,2);
 D22 = D(:,:,3);
+
 H11 = HL(:,:,1);
 H12 = HL(:,:,2);
 H22 = HL(:,:,3);
